@@ -143,7 +143,6 @@ export function HomeView({ services }: Props) {
           <StatusPanel>📂 {totalServices}개 서비스</StatusPanel>
           <StatusPanel>🕯️ 총 추억 {totalMemories.toLocaleString()}개</StatusPanel>
           <StatusPanel>👻 종료된 서비스: {ripCount}개</StatusPanel>
-          <StatusPanel className="ml-auto">준비</StatusPanel>
         </StatusBar>
       </Window>
     </div>
