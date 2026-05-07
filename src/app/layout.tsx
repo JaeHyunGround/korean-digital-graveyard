@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "한국 디지털 묘지 — 추억의 인터넷 서비스 아카이브",
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="h-full">
-      <body className="min-h-screen bg-canvas safe-pad">{children}</body>
+      <body className="min-h-screen bg-canvas safe-pad">
+        {children} <Analytics />
+      </body>
     </html>
   );
 }
