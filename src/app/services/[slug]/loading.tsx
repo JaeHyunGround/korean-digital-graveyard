@@ -78,7 +78,7 @@ function ProgressBar() {
         <div className="bg-progress-stripes animate-win98-stripes absolute inset-0" />
       </div>
       <p className="mt-1 text-center text-[11px] text-ink-muted">
-        묘비를 발굴하고 있어요…
+        묘비에 찾아가고 있어요…
       </p>
     </div>
   );
