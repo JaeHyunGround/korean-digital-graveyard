@@ -18,10 +18,17 @@ export function VoteButton({ slug, initialCount }: Props) {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [fingerprintReady, setFingerprintReady] = useState(false);
 
-  // 마운트 후 핑거프린트 + 로컬 캐시 확인
+  // 마운트 후 핑거프린트 + 로컬 캐시 확인.
+  // 동기 setState 가 effect body에서 일어나면 React 19 Strict Mode가
+  // cascading render 경고를 띄우므로, 캐시 체크 결과의 setState 는
+  // microtask 로 지연해 effect body 밖에서 실행되도록 한다.
   useEffect(() => {
     let cancelled = false;
-    if (hasVoted(slug)) setState("voted");
+
+    Promise.resolve().then(() => {
+      if (!cancelled && hasVoted(slug)) setState("voted");
+    });
+
     getFingerprint()
       .then(() => {
         if (!cancelled) setFingerprintReady(true);
@@ -32,6 +39,7 @@ export function VoteButton({ slug, initialCount }: Props) {
           setState("error");
         }
       });
+
     return () => {
       cancelled = true;
     };
@@ -73,15 +81,16 @@ export function VoteButton({ slug, initialCount }: Props) {
     }
   }
 
-  const disabled = state === "loading" || state === "voted" || !fingerprintReady;
+  const disabled =
+    state === "loading" || state === "voted" || !fingerprintReady;
   const label =
     state === "loading"
       ? "전송중…"
       : state === "voted"
-      ? "✅ 이미 기억하고 있어요"
-      : !fingerprintReady
-      ? "준비중…"
-      : "🕯️ 나도 기억해요!";
+        ? "✅ 기억하고 있어요"
+        : !fingerprintReady
+          ? "준비중…"
+          : "🕯️ 나도 기억해요!";
 
   return (
     <div className="space-y-1">
@@ -91,9 +100,7 @@ export function VoteButton({ slug, initialCount }: Props) {
           ({count.toLocaleString()})
         </span>
       </Button>
-      {errorMsg && (
-        <p className="text-[11px] text-critical">⚠ {errorMsg}</p>
-      )}
+      {errorMsg && <p className="text-[11px] text-critical">⚠ {errorMsg}</p>}
     </div>
   );
 }
