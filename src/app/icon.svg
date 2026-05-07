@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="geometricPrecision">
+  <!-- 청록 데스크탑 배경 -->
+  <rect width="32" height="32" fill="#008080"/>
+
+  <!-- 묘비 본체: 회색 fill + 둥근 윗부분 -->
+  <path d="M5 30 L5 14 a11 11 0 0 1 22 0 L27 30 Z" fill="#c0c0c0"/>
+
+  <!-- 좌상단 bevel highlight (밝은 흰색) -->
+  <path d="M5.5 14 a10.5 10.5 0 0 1 16.2 -8.3"
+        stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+
+  <!-- 우하단 bevel shadow (어두운 회색) -->
+  <path d="M26.5 14 L26.5 29.5 L5.5 29.5"
+        stroke="#404040" stroke-width="1" fill="none"/>
+
+  <!-- 외곽 검정 라인 -->
+  <path d="M5 30 L5 14 a11 11 0 0 1 22 0 L27 30 Z"
+        stroke="#000000" stroke-width="1.5" fill="none"/>
+
+  <!-- R.I.P 텍스트 -->
+  <text x="16" y="23"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="9.5"
+        font-weight="700"
+        text-anchor="middle"
+        fill="#000000"
+        letter-spacing="0.3">R.I.P</text>
+</svg>
