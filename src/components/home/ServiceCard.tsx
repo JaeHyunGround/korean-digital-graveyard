@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { CornerBadge } from "@/components/ui";
-import { CATEGORY_EMOJI, formatYears, type ServiceWithMemoryCount } from "@/lib/format";
+import {
+  CATEGORY_EMOJI,
+  formatYears,
+  type ServiceWithMemoryCount,
+} from "@/lib/format";
 
 type Props = {
   service: ServiceWithMemoryCount;
@@ -34,7 +38,7 @@ export function ServiceCard({ service }: Props) {
       </p>
       <footer className="mt-1.5 flex items-center justify-between">
         <span className="text-[11px] text-ink-soft">
-          💬 {service.memory_count.toLocaleString()}개 추억
+          💬 {service.memory_count.toLocaleString()}개의 추억
         </span>
         <span className="bg-surface bevel-out-1 inline-flex items-center gap-1 px-1.5 py-[1px] text-[11px] font-bold text-ink">
           🕯️ {service.vote_count.toLocaleString()}
