@@ -120,6 +120,17 @@
     var(--color-primary-strong) 8px,
     var(--color-primary-strong) 16px
   );
+  background-size: 16px 100%;
+}
+
+/* 윈도우 98 indeterminate 진행률 (줄무늬가 좌→우로 흐름) */
+@keyframes win98-stripes {
+  from { background-position: 0 0; }
+  to   { background-position: 16px 0; }
+}
+
+@utility animate-win98-stripes {
+  animation: win98-stripes 0.6s linear infinite;
 }
 
 html,
