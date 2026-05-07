@@ -20,7 +20,7 @@
 
 ## 🎯 안치된 서비스
 
-[라이브 사이트](https://korean-digital-graveyard.vercel.app/)에서 현재까지 안치된 묘비들을 만나보세요. 빠진 서비스는 [`/submit`](https://korean-digital-graveyard.vercel.app/submit) 에서 직접 등록할 수 있습니다.
+[라이브 사이트](https://korean-digital-graveyard.vercel.app/)에서 현재까지 안치된 묘비들을 만나보세요. 추억의 서비스를 [`/submit`](https://korean-digital-graveyard.vercel.app/submit) 에서 등록해주세요!
 
 ---
 

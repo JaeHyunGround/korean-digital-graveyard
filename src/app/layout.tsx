@@ -1,10 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "한국 디지털 묘지 — 추억의 인터넷 서비스 아카이브",
   description:
     "싸이월드, 네이트온, 미투데이… 한국인의 추억이 잠든 디지털 묘지. 사라진 인터넷 서비스를 기억하고 추억을 남기는 공간입니다.",
+};
+
+// iOS notch / 카카오톡 인앱 브라우저 등에서 safe-area 인식되도록.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -14,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="h-full">
-      <body className="min-h-screen bg-canvas p-2 md:p-3">{children}</body>
+      <body className="min-h-screen bg-canvas safe-pad">{children}</body>
     </html>
   );
 }
