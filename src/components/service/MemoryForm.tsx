@@ -87,7 +87,7 @@ export function MemoryForm({ serviceId }: Props) {
         </div>
       </div>
       {error && (
-        <p className="bg-paper bevel-in-1 px-1.5 py-1 text-[11px] text-critical">
+        <p className="bg-paper bevel-input px-1.5 py-1 text-[11px] text-critical">
           ⚠ {error}
         </p>
       )}

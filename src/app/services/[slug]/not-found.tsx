@@ -7,7 +7,7 @@ export default function ServiceNotFound() {
       <Window>
         <TitleBar title="❓ 묘지를 찾을 수 없습니다" />
         <WindowBody>
-          <div className="bg-paper bevel-in flex flex-col items-center gap-3 p-6 text-center">
+          <div className="bg-paper bevel-input-2 flex flex-col items-center gap-3 p-6 text-center">
             <div className="text-5xl">🪦</div>
             <p className="text-[13px] font-bold">
               해당 서비스의 묘비를 찾을 수 없습니다.

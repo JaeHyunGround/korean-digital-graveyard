@@ -17,7 +17,7 @@ export function ServiceCard({ service }: Props) {
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="bg-paper bevel-in hover:bevel-out relative block p-2 transition-colors hover:bg-surface-muted"
+      className="bg-paper bevel-input-2 hover:bevel-out relative block p-2 transition-colors hover:bg-surface-muted"
     >
       <CornerBadge variant={isAlive ? "alive" : "rip"} />
       <header className="mb-1.5 flex items-center gap-1.5 pr-12">

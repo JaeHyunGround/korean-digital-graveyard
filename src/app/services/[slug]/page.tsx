@@ -148,7 +148,7 @@ function ServiceDetailBody({
   return (
     <div className="grid gap-3 md:grid-cols-[1fr_280px]">
       {/* 좌측 - 정보 */}
-      <section className="bg-paper bevel-in relative p-3">
+      <section className="bg-paper bevel-input-2 relative p-3">
         <CornerBadge variant={isAlive ? "alive" : "rip"} />
         <header className="mb-2 flex items-center gap-2 pr-12">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-bevel-dark bg-surface text-2xl">
@@ -204,14 +204,14 @@ function ServiceDetailBody({
 
       {/* 우측 - 투표 + 추억 */}
       <aside className="space-y-2">
-        <div className="bg-paper bevel-in p-2">
+        <div className="bg-paper bevel-input-2 p-2">
           <h2 className="mb-1.5 text-[12px] font-bold text-primary">
             🕯️ 이 서비스를 기억하시나요?
           </h2>
           <VoteButton slug={service.slug} initialCount={service.vote_count} />
         </div>
 
-        <div className="bg-paper bevel-in p-2">
+        <div className="bg-paper bevel-input-2 p-2">
           <h2 className="mb-1.5 flex items-center justify-between text-[12px] font-bold text-primary">
             <span>💬 추억</span>
             <span className="font-mono text-[11px] text-ink-soft">
@@ -221,7 +221,7 @@ function ServiceDetailBody({
           <MemoryList memories={memories} />
         </div>
 
-        <div className="bg-paper bevel-in p-2">
+        <div className="bg-paper bevel-input-2 p-2">
           <h2 className="mb-1.5 text-[12px] font-bold text-primary">
             📝 추억 남기기
           </h2>
@@ -238,7 +238,7 @@ function ErrorBox({ message }: { message: string }) {
       <Window>
         <TitleBar title="⚠️ 오류" />
         <WindowBody>
-          <div className="bg-paper bevel-in p-4 text-[13px]">
+          <div className="bg-paper bevel-input-2 p-4 text-[13px]">
             <p className="mb-2 font-bold text-critical">
               데이터를 불러오지 못했습니다.
             </p>

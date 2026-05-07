@@ -158,7 +158,7 @@ function EmptyState({
   onReset: () => void;
 }) {
   return (
-    <div className="bg-paper bevel-in mx-auto flex max-w-md flex-col items-center gap-3 p-8 text-center">
+    <div className="bg-paper bevel-input-2 mx-auto flex max-w-md flex-col items-center gap-3 p-8 text-center">
       <div className="text-5xl">🪦</div>
       {hasServices ? (
         <>

@@ -70,7 +70,7 @@ function ErrorBanner({ message }: { message: string }) {
       <Window>
         <TitleBar title="⚠️ 오류 — Supabase 연결 실패" />
         <WindowBody>
-          <div className="bg-paper bevel-in p-4 text-[13px]">
+          <div className="bg-paper bevel-input-2 p-4 text-[13px]">
             <p className="mb-2 font-bold text-critical">데이터를 불러오지 못했습니다.</p>
             <pre className="text-[12px] whitespace-pre-wrap text-ink-muted">{message}</pre>
             <p className="mt-3 text-[12px] text-ink-soft">

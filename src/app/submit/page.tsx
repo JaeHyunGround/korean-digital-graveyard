@@ -31,7 +31,7 @@ export default function SubmitPage() {
           ]}
         />
         <WindowBody>
-          <div className="bg-paper bevel-in p-3">
+          <div className="bg-paper bevel-input-2 p-3">
             <p className="mb-3 text-[12px] leading-[1.6] text-ink-muted">
               사라진(또는 살아남은) 인터넷 서비스를 함께 기억해요.
             </p>

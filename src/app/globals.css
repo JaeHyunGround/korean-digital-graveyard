@@ -76,11 +76,21 @@
   border-right-color: var(--color-bevel-light);
 }
 
-/* 입력 필드 전용 inset — 흰 배경 위에서 우하단도 보이도록
-   윈도우 98 정통 입력 박스(좌상단 어둡게, 우하단 살짝 회색 highlight) */
+/* 입력 필드 / paper 위 인셋 전용 — 흰 배경 위에서 우하단도 보이도록
+   윈도우 98 정통 입력 박스(좌상단 어둡게, 우하단 살짝 회색 highlight)
+   bevel-in/bevel-in-1 의 우하단은 #ffffff 라 paper 위에선 묻힘 */
 @utility bevel-input {
   border-style: solid;
   border-width: 1px;
+  border-top-color: var(--color-bevel-dark);
+  border-left-color: var(--color-bevel-dark);
+  border-bottom-color: var(--color-bevel-highlight);
+  border-right-color: var(--color-bevel-highlight);
+}
+
+@utility bevel-input-2 {
+  border-style: solid;
+  border-width: 2px;
   border-top-color: var(--color-bevel-dark);
   border-left-color: var(--color-bevel-dark);
   border-bottom-color: var(--color-bevel-highlight);

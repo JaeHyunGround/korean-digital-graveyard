@@ -32,7 +32,7 @@ export default function AboutPage() {
           ]}
         />
         <WindowBody>
-          <article className="bg-paper bevel-in space-y-3 p-4 text-[13px] leading-[1.7]">
+          <article className="bg-paper bevel-input-2 space-y-3 p-4 text-[13px] leading-[1.7]">
             <h1 className="text-[18px] font-bold text-primary">
               🪦 한국 디지털 묘지
             </h1>
