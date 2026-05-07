@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
-import { getSupabase } from "@/lib/supabase";
+import { voteForServiceAction } from "@/lib/actions";
 import { getFingerprint, hasVoted, markVoted } from "@/lib/fingerprint";
 
 type Props = {
@@ -53,26 +53,15 @@ export function VoteButton({ slug, initialCount }: Props) {
 
     try {
       const fingerprint = await getFingerprint();
-      const supabase = getSupabase();
-      const { data, error } = await supabase.rpc("vote_for_service", {
-        p_slug: slug,
-        p_fingerprint: fingerprint,
-      });
+      const result = await voteForServiceAction(slug, fingerprint);
 
-      if (error) {
-        setErrorMsg(error.message);
+      if (!result.ok) {
+        setErrorMsg(result.errorMessage);
         setState("error");
         return;
       }
 
-      const result = data?.[0];
-      if (!result) {
-        setErrorMsg("응답이 비어있습니다");
-        setState("error");
-        return;
-      }
-
-      setCount(result.vote_count);
+      setCount(result.voteCount);
       markVoted(slug);
       setState("voted");
     } catch (e) {
@@ -85,7 +74,7 @@ export function VoteButton({ slug, initialCount }: Props) {
     state === "loading" || state === "voted" || !fingerprintReady;
   const label =
     state === "loading"
-      ? "전송중…"
+      ? "기억하는 중…"
       : state === "voted"
         ? "✅ 기억하고 있어요"
         : !fingerprintReady
