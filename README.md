@@ -1,116 +1,141 @@
-# 한국 디지털 묘지 (Korean Digital Graveyard)
+# 🪦 한국 디지털 묘지
 
-추억의 인터넷 서비스(싸이월드, 네이트온, 미투데이…)를 윈도우 98 감성의 디지털 묘비로 아카이빙하는 커뮤니티 사이트.
+> 사라진 추억의 인터넷 서비스를 함께 기억하는 디지털 묘비.
 
-## 기술 스택
-- Next.js 16 (App Router) · React 19 · TypeScript
-- Tailwind CSS v4 (CSS-first 토큰 시스템)
-- Supabase (DB + RPC, 인증 없음)
-- FingerprintJS OSS (투표 중복방지)
-- Vercel 배포
+싸이월드, 네이트온, 미투데이… 우리가 매일 켜두고 살았던 그 서비스들은 어느 순간 조용히 사라졌습니다.
+한국 디지털 묘지는 이 잊혀진 인터넷 서비스들을 **윈도우 98 감성의 묘비**로 보존하고, 함께 추억을 나누는 공간입니다.
 
-## 로컬 개발 시작
+🔗 **사이트**: _배포 후 URL 추가 예정_
+
+---
+
+## ✨ 무엇을 할 수 있나요?
+
+- 🪦 **묘비 둘러보기** — 카테고리(SNS / 메신저 / 커뮤니티 / 게임 / 음악영상)와 연대(1990s / 2000s / 2010s)별로 사라진 서비스를 탐색해요.
+- 🕯️ **기억해요 투표** — 추억하는 서비스에 한 표. 익명 핑거프린트로 중복 방지, 로그인 없음.
+- 💬 **추억 남기기** — 닉네임만 적으면 누구나 그 시절 이야기를 댓글로 남길 수 있어요.
+- 📝 **새 묘비 세우기** — 목록에 없는 서비스도 직접 제출해서 추모할 수 있어요.
+
+---
+
+## 🎯 안치된 서비스 (현재 11개)
+
+| 카테고리 | 서비스 | 운영 기간 |
+|---|---|---|
+| 🌐 SNS | 싸이월드 | 1999–2019 |
+| 🌐 SNS | 미투데이 | 2007–2014 |
+| 🌐 SNS | 이글루스 | 2003–2023 |
+| 💬 메신저 | 네이트온 | 2002–2022 |
+| 💬 메신저 | 버디버디 | 1999–2014 |
+| 💬 메신저 | 마이피플 | 2010–2015 |
+| 🏘️ 커뮤니티 | 세이클럽 | 1999–2019 |
+| 🏘️ 커뮤니티 | 프리챌 | 1999–2013 |
+| 🏘️ 커뮤니티 | 다음 카페 | 1999–현재 ✅ |
+| 🎵 음악영상 | 소리바다 | 2000–현재 ✅ |
+| 🎵 음악영상 | 판도라TV | 2004–2020 |
+
+빠진 서비스가 있다면 [`/submit`](#) 에서 직접 등록해주세요.
+
+---
+
+## 🎨 디자인 컨셉
+
+윈도우 98이 한창이던 그 시절을 살았던 사람들에게 가장 익숙한 비주얼 언어로,
+사라진 서비스들에 대한 향수를 시각적으로도 함께 전달합니다.
+
+- 청록 데스크탑 배경 (`#008080`) · 회색 chrome
+- 그라디언트 타이틀바, 입체 beveled 테두리, 도트 디바이더
+- R.I.P (🟥) / 운영중 (🟩) 묘비 뱃지
+- 사이드바 + 카드 그리드의 윈도우 탐색기 레이아웃 (모바일은 드롭다운으로 자동 전환)
+
+폰트는 윈도우 98의 픽셀 룩을 흉내내는 대신, 한글 가독성을 우선해 모던 안티앨리어싱과 시스템 한글 폰트(Apple SD Gothic Neo / Pretendard / Malgun Gothic)를 사용합니다.
+
+---
+
+## 🛡️ 개인정보 & 보안
+
+- **회원가입 없음** — 닉네임만으로 추억을 남길 수 있어요.
+- **익명 투표** — 중복 방지를 위해 브라우저 핑거프린트(FingerprintJS OSS)만 사용. 개인 식별 정보는 수집하지 않아요.
+- **DB 보안** — Supabase Row Level Security(RLS) 적용. 투표는 `security definer` RPC를 통해서만 처리되어 직접 조작 불가.
+
+---
+
+## 🛠️ 기술 스택
+
+- **Next.js 16** (App Router) · React 19 · TypeScript
+- **Tailwind CSS v4** — CSS-first 의미 기반 디자인 토큰 (primary / surface / ink / critical)
+- **Supabase** — PostgreSQL + RPC + RLS
+- **FingerprintJS OSS** — 익명 투표 중복 방지
+- **Vercel** 배포
+
+---
+
+## 👨‍💻 직접 실행해보고 싶다면
+
+<details>
+<summary>로컬 개발 환경 + 자체 배포 가이드 (펼치기)</summary>
+
+### 1. 로컬 개발
 
 ```bash
+git clone https://github.com/JaeHyunGround/korean-digital-graveyard.git
+cd korean-digital-graveyard
 pnpm install
-cp .env.local.example .env.local   # 그리고 실제 Supabase URL/키로 채우기
+cp .env.local.example .env.local   # 실제 Supabase 값으로 채우기
 pnpm dev
 ```
 
-http://localhost:3000 에서 확인.
+http://localhost:3000
 
-## Supabase 셋업
+### 2. Supabase 셋업
 
 1. [supabase.com/dashboard](https://supabase.com/dashboard) 에서 새 프로젝트 생성 (region: Northeast Asia / Seoul 권장)
-2. **Project Settings → API** 에서 `URL` 과 `Publishable key` 복사 → `.env.local` 에 붙여넣기
-3. **SQL Editor → New query** 에서 다음 마이그레이션 파일들을 순서대로 실행
-   - [`supabase/migrations/001_initial_schema.sql`](./supabase/migrations/001_initial_schema.sql) — 테이블, RPC, RLS
-   - [`supabase/migrations/002_fix_vote_rpc_ambiguity.sql`](./supabase/migrations/002_fix_vote_rpc_ambiguity.sql) — RPC 컬럼명 충돌 핫픽스
-   - [`supabase/migrations/003_seed_services.sql`](./supabase/migrations/003_seed_services.sql) — 11개 시드 + 멱등 upsert
-4. **Table Editor** 에서 `services` / `memories` / `votes` 3개 테이블 + 11개 시드 row 확인
+2. **Project Settings → API** 에서 `URL` 과 `Publishable key` 를 `.env.local` 에 붙여넣기
+3. **SQL Editor → New query** 에서 다음 마이그레이션을 순서대로 실행:
+   - [`001_initial_schema.sql`](./supabase/migrations/001_initial_schema.sql) — 테이블, RPC, RLS 정책
+   - [`002_fix_vote_rpc_ambiguity.sql`](./supabase/migrations/002_fix_vote_rpc_ambiguity.sql) — RPC 컬럼 충돌 핫픽스
+   - [`003_seed_services.sql`](./supabase/migrations/003_seed_services.sql) — 11개 서비스 시드 + 멱등 upsert
 
-### 스키마 요약
-- `services` — 묘비. `slug` unique, `vote_count` 캐시, `category`는 6종 enum check
-- `memories` — 추억 댓글. 닉네임 + 본문, 로그인 없음
-- `votes` — 투표 기록. `(service_id, fingerprint)` unique
-- `vote_for_service(slug, fingerprint)` RPC — 멱등 투표 (중복이면 false 반환)
+### 3. Vercel 배포
 
-### RLS 정책
-- `services`: SELECT 공개, INSERT 공개(`vote_count = 0` 강제), UPDATE/DELETE 차단
-- `memories`: SELECT/INSERT 공개
-- `votes`: SELECT 공개, INSERT 차단 → `vote_for_service` RPC 경유 강제
+1. [vercel.com/new](https://vercel.com/new) → 이 repo import
+2. **Environment Variables** 에 등록 (Production / Preview / Development 모두):
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+3. Deploy 버튼 클릭 → 이후 `git push origin main` 시 자동 배포
 
-## Vercel 배포
+### DB 스키마 요약
 
-### 1. Git 저장소 준비
-프로젝트가 아직 git 저장소가 아니라면:
-```bash
-git init
-git add -A
-git commit -m "feat: 한국 디지털 묘지 v0.1"
-```
-GitHub에 새 repo를 만들고 push:
-```bash
-git branch -M main
-git remote add origin git@github.com:YOUR_USER/korean-digital-graveyard.git
-git push -u origin main
-```
+- `services` — 묘비 (이름, slug, 카테고리, 운영기간, 설명, vote_count 캐시)
+- `memories` — 추억 댓글 (서비스 FK, 닉네임, 본문)
+- `votes` — 투표 기록 (서비스 FK, fingerprint, `(service_id, fingerprint)` UNIQUE)
+- `vote_for_service(slug, fingerprint)` RPC — 멱등 투표 함수
 
-### 2. Vercel에서 import
-1. [vercel.com/new](https://vercel.com/new) → GitHub 연결 → 위 저장소 선택
-2. **Framework**: Next.js (자동 감지)
-3. **Build / Output**: 그대로 (Vercel 기본값)
-4. **Root Directory**: `.` (변경 없음)
-
-### 3. Environment Variables 등록
-**Settings → Environment Variables** 에서 (Production / Preview / Development 모두 적용):
-
-| Key | Value |
-|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | `https://YOUR-PROJECT-REF.supabase.co` |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | `sb_publishable_xxxxxxxx...` |
-
-`Publishable key`는 클라이언트에 노출되어도 안전합니다 (RLS로 보호됨). `Secret key`는 절대 등록하지 마세요.
-
-### 4. Deploy
-"Deploy" 버튼 클릭 → 1–2분 후 `https://YOUR-PROJECT.vercel.app` 에서 확인.
-
-이후 `git push origin main` 만 해도 자동 배포됩니다.
-
-### 빌드 검증 (선택)
-배포 전에 로컬에서 production 빌드를 확인하고 싶다면:
-```bash
-pnpm build && pnpm start
-```
-
-## 디렉토리
+### 디렉토리 구조
 
 ```
 src/
-  app/
-    page.tsx                  # /  (홈 + 카드 그리드 + 필터/정렬)
-    services/[slug]/page.tsx  # /services/:slug (상세 + 투표 + 추억)
-    submit/page.tsx           # /submit (제출 폼)
-    about/page.tsx            # /about (사이트 소개)
-    layout.tsx                # 글로벌 레이아웃
-    globals.css               # Tailwind v4 + 디자인 토큰
+  app/                        # Next.js App Router
+    page.tsx                  # / (홈 + 카드 그리드 + 필터/정렬)
+    services/[slug]/page.tsx  # 서비스 상세 + 투표 + 추억
+    submit/page.tsx           # 서비스 제출 폼
+    about/page.tsx            # 사이트 소개
   components/
-    ui/                       # Window, TitleBar, Button, Input, … (디자인 시스템)
+    ui/                       # 디자인 시스템 (Window, TitleBar, Button, …)
     home/                     # ServiceCard, FilterSidebar, MobileFilterBar, SortBar
     service/                  # VoteButton, MemoryList, MemoryForm
     submit/                   # SubmitForm
-  lib/
-    cn.ts                     # className 합성 유틸
-    supabase.ts               # 지연 초기화 클라이언트
-    database.types.ts         # Supabase 스키마 타입
-    fingerprint.ts            # 핑거프린트 + 투표 로컬 캐시
-    format.ts                 # 카테고리 이모지, 연대, 시간 포맷
-    slug.ts                   # 슬러그 생성/충돌 회피
-supabase/
-  migrations/
-    001_initial_schema.sql
-    002_fix_vote_rpc_ambiguity.sql
-    003_seed_services.sql
-docs/
-  mockup.html                 # 참고 목업
+  lib/                        # cn, supabase, fingerprint, format, slug, types
+supabase/migrations/          # SQL 마이그레이션
+docs/mockup.html              # 참고 목업
 ```
+
+</details>
+
+---
+
+## 📜 라이선스
+
+MIT (예정).
+
+이 프로젝트의 추억은 모두 함께 만든 것입니다 — 자유롭게 fork하고, 같은 컨셉의 다른 묘지를 만드셔도 좋습니다.
