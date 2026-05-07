@@ -65,7 +65,7 @@ export function MemoryForm({ serviceId }: Props) {
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="추억을 남길 이름"
+          placeholder="추억을 남길 이름/닉네임"
           maxLength={NAME_MAX}
           disabled={submitting}
           required
