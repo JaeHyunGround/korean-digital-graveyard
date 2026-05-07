@@ -8,7 +8,7 @@ export function Input({ className, ...rest }: InputProps) {
     <input
       {...rest}
       className={cn(
-        "bg-paper bevel-in-1 w-full px-1.5 py-[3px] text-[12px] text-ink",
+        "bg-paper bevel-input w-full px-2 py-1 text-[12px] text-ink",
         "placeholder:text-ink-faint",
         "focus:outline-none",
         "disabled:bg-surface disabled:text-ink-soft",

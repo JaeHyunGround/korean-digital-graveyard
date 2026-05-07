@@ -89,7 +89,7 @@ export function HomeView({ services }: Props) {
           items={[
             { label: "파일(F)" },
             { label: "보기(V)" },
-            { label: "서비스 제출(S)", href: "/submit" },
+            { label: "🪦 묘비 세우기", href: "/submit" },
             { label: "도움말(H)", href: "/about" },
           ]}
         />
@@ -179,7 +179,7 @@ function EmptyState({
             href="/submit"
             className="bg-surface bevel-out hover:bg-surface-muted active:bevel-in cursor-pointer px-3 py-[3px] text-[12px] font-bold text-ink"
           >
-            + 서비스 제출하기
+            🪦 묘비 세우기
           </Link>
         </>
       )}

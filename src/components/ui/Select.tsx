@@ -10,7 +10,7 @@ export function Select({ children, className, ...rest }: SelectProps) {
     <select
       {...rest}
       className={cn(
-        "bg-paper bevel-in-1 px-1 py-[1px] text-[12px] text-ink",
+        "bg-paper bevel-input px-2 py-1 text-[12px] text-ink",
         "focus:outline-none",
         className
       )}

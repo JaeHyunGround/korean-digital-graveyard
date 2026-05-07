@@ -11,7 +11,7 @@ import {
   Divider,
 } from "@/components/ui";
 import { getSupabase } from "@/lib/supabase";
-import { makeSlug, withRandomSuffix } from "@/lib/slug";
+import { makeSlug, normalizeName, withRandomSuffix } from "@/lib/slug";
 import {
   SERVICE_CATEGORIES,
   type ServiceCategory,
@@ -46,6 +46,7 @@ export function SubmitForm() {
   const router = useRouter();
   const [form, setForm] = useState<FormState>(INITIAL_STATE);
   const [error, setError] = useState<string | null>(null);
+  const [duplicateSlug, setDuplicateSlug] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const previewSlug = useMemo(
@@ -84,6 +85,7 @@ export function SubmitForm() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError(null);
+    setDuplicateSlug(null);
 
     const validationError = validate();
     if (validationError) {
@@ -97,6 +99,24 @@ export function SubmitForm() {
       const baseSlug = makeSlug(form.name);
       const startYear = Number(form.startYear);
       const endYear = form.isAlive ? null : Number(form.endYear);
+
+      // 사전 중복 검증: 정규화된 이름이 같은 묘비가 이미 있는지 확인
+      const targetKey = normalizeName(form.name);
+      const { data: existing, error: existingErr } = await supabase
+        .from("services")
+        .select("name, slug");
+      if (existingErr) {
+        setError(existingErr.message);
+        return;
+      }
+      const dup = existing?.find((s) => normalizeName(s.name) === targetKey);
+      if (dup) {
+        setError(
+          `"${dup.name}" 은(는) 이미 안치되어 있어요. 같은 묘비에 추억을 남겨주세요.`
+        );
+        setDuplicateSlug(dup.slug);
+        return;
+      }
 
       // unique_violation(23505) 발생 시 접미어 추가하여 최대 3회 재시도
       let attempt = 0;
@@ -237,8 +257,16 @@ export function SubmitForm() {
       </Field>
 
       {error && (
-        <div className="bg-paper bevel-in-1 px-2 py-1.5 text-[12px] text-critical">
-          ⚠ {error}
+        <div className="bg-paper bevel-input space-y-1 px-2 py-1.5 text-[12px] text-critical">
+          <p>⚠ {error}</p>
+          {duplicateSlug && (
+            <Link
+              href={`/services/${encodeURIComponent(duplicateSlug)}`}
+              className="inline-block font-bold text-primary underline"
+            >
+              → 기존 묘비로 가기
+            </Link>
+          )}
         </div>
       )}
 
@@ -254,9 +282,6 @@ export function SubmitForm() {
         >
           취소
         </Link>
-        <span className="ml-auto text-[11px] text-ink-soft">
-          제출하면 모두에게 공개됩니다.
-        </span>
       </div>
     </form>
   );

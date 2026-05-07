@@ -88,7 +88,7 @@ export function FilterSidebar({
             href="/submit"
             className="bg-surface bevel-out hover:bg-surface-muted active:bevel-in block w-full px-2 py-[2px] text-center text-[11px] font-bold text-ink"
           >
-            + 서비스 제출하기
+            🪦 묘비 세우기
           </Link>
         </div>
       </WindowBody>

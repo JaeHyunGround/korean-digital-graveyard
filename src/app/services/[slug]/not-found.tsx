@@ -26,7 +26,7 @@ export default function ServiceNotFound() {
                 href="/submit"
                 className="bg-surface bevel-out hover:bg-surface-muted active:bevel-in cursor-pointer px-3 py-[3px] text-[12px] font-bold text-ink"
               >
-                + 새 서비스 제출하기
+                🪦 새 묘비 세우기
               </Link>
             </div>
           </div>

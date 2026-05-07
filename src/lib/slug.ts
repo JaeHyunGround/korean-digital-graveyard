@@ -24,3 +24,18 @@ export function randomSuffix(): string {
 export function withRandomSuffix(slug: string): string {
   return `${slug}-${randomSuffix()}`;
 }
+
+/**
+ * 서비스명을 정규화해서 중복 비교용 키로 변환.
+ * - NFC 정규화 (한글 자모 결합)
+ * - 소문자
+ * - 모든 공백 / 하이픈 / 점 제거 → "카트 라이더" === "카트라이더" === "Kart Rider"
+ *
+ * 한글-영문 혼용 ("카트라이더" vs "kartrider")은 잡지 못함.
+ */
+export function normalizeName(name: string): string {
+  return name
+    .normalize("NFC")
+    .toLowerCase()
+    .replace(/[\s\-._/]+/g, "");
+}

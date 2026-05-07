@@ -28,7 +28,7 @@ export default function AboutPage() {
           }
           items={[
             { label: "← 목록으로", href: "/" },
-            { label: "서비스 제출(S)", href: "/submit" },
+            { label: "🪦 묘비 세우기", href: "/submit" },
           ]}
         />
         <WindowBody>
@@ -53,9 +53,9 @@ export default function AboutPage() {
                 <strong>추억 남기기</strong> — 닉네임만 적으면 누구나 추억을 남길 수 있어요.
               </li>
               <li>
-                <strong>새 서비스 제출</strong> — 목록에 없는 서비스는{" "}
+                <strong>묘비 세우기</strong> — 목록에 없는 서비스는{" "}
                 <Link href="/submit" className="font-bold text-primary hover:underline">
-                  서비스 제출 폼
+                  묘비 세우기
                 </Link>
                 에서 직접 등록해주세요.
               </li>

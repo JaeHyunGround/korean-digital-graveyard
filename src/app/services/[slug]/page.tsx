@@ -89,7 +89,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           }
           items={[
             { label: "← 목록으로", href: "/" },
-            { label: "서비스 제출(S)", href: "/submit" },
+            { label: "🪦 묘비 세우기", href: "/submit" },
             { label: "도움말(H)", href: "/about" },
           ]}
         />
