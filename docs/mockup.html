@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #008080;
+    font-family: 'MS Sans Serif', Arial, sans-serif;
+    font-size: 12px;
+    min-height: 100vh;
+    padding: 12px;
+  }
+  .window {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: 2px 2px 0 #000;
+    margin-bottom: 12px;
+  }
+  .title-bar {
+    background: linear-gradient(to right, #000080, #1084d0);
+    color: white;
+    padding: 3px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 11px;
+    user-select: none;
+  }
+  .title-bar-buttons { display: flex; gap: 2px; }
+  .tb-btn {
+    width: 16px; height: 14px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #fff #808080 #808080 #fff;
+    font-size: 9px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-weight: bold; color: #000;
+  }
+  .window-body { padding: 8px; }
+  .navbar {
+    background: #c0c0c0;
+    border-bottom: 2px solid #808080;
+    padding: 4px 8px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nav-logo { font-weight: bold; font-size: 13px; color: #000080; display: flex; align-items: center; gap: 4px; }
+  .menu-bar { display: flex; gap: 2px; }
+  .menu-item { padding: 2px 8px; cursor: pointer; border: 1px solid transparent; font-size: 11px; }
+  .menu-item:hover { border-color: #fff #808080 #808080 #fff; background: #c0c0c0; }
+  .status-bar {
+    background: #c0c0c0; border-top: 1px solid #808080;
+    padding: 2px 8px; font-size: 10px; color: #444;
+    display: flex; gap: 16px;
+  }
+  .status-panel { border: 1px solid; border-color: #808080 #fff #fff #808080; padding: 1px 6px; }
+  .main-layout { display: flex; gap: 8px; }
+  .sidebar { width: 160px; flex-shrink: 0; }
+  .content { flex: 1; }
+  .filter-item {
+    display: flex; align-items: center; gap: 4px;
+    padding: 2px 6px; font-size: 11px; cursor: pointer;
+  }
+  .filter-item:hover { background: #000080; color: #fff; }
+  .filter-item.active { background: #000080; color: #fff; }
+  .filter-count { margin-left: auto; font-size: 10px; color: #666; }
+  .filter-item.active .filter-count { color: #aaa; }
+  .sort-bar {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 8px; padding: 4px 6px;
+    background: #d4d0c8;
+    border: 1px solid; border-color: #808080 #fff #fff #808080;
+    font-size: 11px;
+  }
+  .win-select {
+    background: #fff; border: 1px solid; border-color: #808080 #fff #fff #808080;
+    padding: 1px 4px; font-size: 11px; font-family: inherit;
+  }
+  .win-btn {
+    background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff;
+    padding: 2px 10px; font-size: 11px; font-family: inherit; cursor: pointer; font-weight: bold;
+  }
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .service-card {
+    background: #fff; border: 2px solid; border-color: #808080 #fff #fff #808080;
+    padding: 8px; cursor: pointer; position: relative;
+  }
+  .service-card:hover { border-color: #fff #808080 #808080 #fff; background: #f0f0f0; }
+  .card-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .card-icon {
+    width: 28px; height: 28px; background: #c0c0c0; border: 1px solid #808080;
+    display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+  }
+  .card-title { font-weight: bold; font-size: 12px; color: #000080; }
+  .card-years { font-size: 10px; color: #666; }
+  .card-desc {
+    font-size: 10px; color: #333; line-height: 1.4; margin-bottom: 6px;
+    border-top: 1px solid #d0d0d0; padding-top: 5px;
+  }
+  .card-footer { display: flex; justify-content: space-between; align-items: center; }
+  .memory-badge { font-size: 10px; color: #666; display: flex; align-items: center; gap: 2px; }
+  .vote-btn {
+    background: #c0c0c0; border: 1px solid; border-color: #fff #808080 #808080 #fff;
+    padding: 1px 6px; font-size: 10px; cursor: pointer; display: flex; align-items: center; gap: 3px;
+  }
+  .rip-stamp {
+    position: absolute; top: 6px; right: 6px;
+    background: #800000; color: #fff; font-size: 8px; font-weight: bold; padding: 1px 4px; letter-spacing: 1px;
+  }
+  .active-stamp {
+    position: absolute; top: 6px; right: 6px;
+    background: #006400; color: #fff; font-size: 8px; font-weight: bold; padding: 1px 4px;
+  }
+  .progress-bar {
+    height: 16px; background: #c0c0c0; border: 1px solid; border-color: #808080 #fff #fff #808080;
+    margin-bottom: 6px; overflow: hidden; position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: repeating-linear-gradient(90deg, #000080 0px, #000080 8px, #1084d0 8px, #1084d0 16px);
+    width: 84%;
+  }
+  .progress-label {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: bold; color: #fff; mix-blend-mode: difference;
+  }
+  .divider { border: none; border-top: 1px solid #808080; border-bottom: 1px solid #fff; margin: 6px 0; }
+  .info-row { display: flex; gap: 8px; margin-bottom: 4px; font-size: 11px; }
+  .info-label { color: #666; width: 70px; flex-shrink: 0; }
+  .info-value { color: #000; font-weight: bold; }
+  .memory-item { border-bottom: 1px dotted #ccc; padding: 5px 4px; font-size: 11px; }
+  .memory-author { font-weight: bold; color: #000080; margin-right: 6px; }
+  .memory-text { color: #333; }
+  .memory-date { font-size: 10px; color: #888; float: right; }
+  .win-input {
+    background: #fff; border: 1px solid; border-color: #808080 #fff #fff #808080;
+    padding: 2px 4px; font-size: 11px; font-family: inherit; width: 100%; margin-bottom: 4px;
+  }
+  .win-textarea {
+    background: #fff; border: 1px solid; border-color: #808080 #fff #fff #808080;
+    padding: 2px 4px; font-size: 11px; font-family: inherit; width: 100%; resize: vertical; height: 50px; margin-bottom: 4px;
+  }
+  .screenshot-thumb {
+    width: 70px; height: 50px; background: #808080; border: 1px solid #444;
+    display: flex; align-items: center; justify-content: center; font-size: 9px; color: #fff; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="title-bar">
+    <span>🪦 한국 디지털 묘지 - 추억의 인터넷 서비스 아카이브</span>
+    <div class="title-bar-buttons">
+      <div class="tb-btn">_</div><div class="tb-btn">□</div><div class="tb-btn">✕</div>
+    </div>
+  </div>
+  <div class="navbar">
+    <div class="nav-logo">🪦 디지털 묘지</div>
+    <div class="menu-bar">
+      <div class="menu-item">파일(F)</div>
+      <div class="menu-item">보기(V)</div>
+      <div class="menu-item">서비스 제출(S)</div>
+      <div class="menu-item">도움말(H)</div>
+    </div>
+  </div>
+  <div class="window-body">
+    <div class="main-layout">
+      <div class="sidebar">
+        <div class="window">
+          <div class="title-bar" style="font-size:10px; padding:2px 5px;"><span>📁 카테고리</span></div>
+          <div class="window-body" style="padding:4px 0;">
+            <div class="filter-item active">📂 전체 <span class="filter-count">47</span></div>
+            <div class="filter-item">💬 SNS/블로그 <span class="filter-count">12</span></div>
+            <div class="filter-item">📨 메신저 <span class="filter-count">8</span></div>
+            <div class="filter-item">🏘️ 커뮤니티 <span class="filter-count">11</span></div>
+            <div class="filter-item">🎮 게임 <span class="filter-count">9</span></div>
+            <div class="filter-item">🎵 음악/영상 <span class="filter-count">5</span></div>
+            <hr class="divider">
+            <div style="padding:2px 6px; font-size:10px; font-weight:bold; color:#000080;">⏱ 연대별</div>
+            <div class="filter-item">📅 1990년대</div>
+            <div class="filter-item">📅 2000년대</div>
+            <div class="filter-item">📅 2010년대</div>
+            <hr class="divider">
+            <div style="padding:4px 6px;">
+              <button class="win-btn" style="width:100%; font-size:10px;">+ 서비스 제출하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="sort-bar">
+          <label>정렬:</label>
+          <select class="win-select">
+            <option>추억 많은 순</option>
+            <option>투표 많은 순</option>
+            <option>최신 등록순</option>
+          </select>
+          <span style="margin-left:auto; color:#444;">총 47개 서비스 안치됨</span>
+        </div>
+        <div class="cards-grid">
+          <div class="service-card">
+            <div class="rip-stamp">R.I.P</div>
+            <div class="card-header">
+              <div class="card-icon">🌐</div>
+              <div><div class="card-title">싸이월드</div><div class="card-years">1999 — 2019</div></div>
+            </div>
+            <div class="card-desc">미니홈피, 도토리, 일촌... 대한민국 첫 SNS의 전설</div>
+            <div class="card-footer">
+              <span class="memory-badge">💬 1,247개 추억</span>
+              <button class="vote-btn">🕯️ 기억해요 <b>8,432</b></button>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="rip-stamp">R.I.P</div>
+            <div class="card-header">
+              <div class="card-icon">💬</div>
+              <div><div class="card-title">네이트온</div><div class="card-years">2002 — 2022</div></div>
+            </div>
+            <div class="card-desc">학교 끝나고 바로 켜던 그 메신저. 쪽지와 멀티채팅의 추억</div>
+            <div class="card-footer">
+              <span class="memory-badge">💬 892개 추억</span>
+              <button class="vote-btn">🕯️ 기억해요 <b>6,201</b></button>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="rip-stamp">R.I.P</div>
+            <div class="card-header">
+              <div class="card-icon">📝</div>
+              <div><div class="card-title">미투데이</div><div class="card-years">2007 — 2014</div></div>
+            </div>
+            <div class="card-desc">네이버판 트위터. 짧은 일상 공유의 시초</div>
+            <div class="card-footer">
+              <span class="memory-badge">💬 445개 추억</span>
+              <button class="vote-btn">🕯️ 기억해요 <b>3,891</b></button>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="active-stamp">운영중</div>
+            <div class="card-header">
+              <div class="card-icon">🎮</div>
+              <div><div class="card-title">한게임</div><div class="card-years">1999 — 현재</div></div>
+            </div>
+            <div class="card-desc">맞고, 포커, 체스... 한국 온라인 게임의 시작점</div>
+            <div class="card-footer">
+              <span class="memory-badge">💬 678개 추억</span>
+              <button class="vote-btn">🕯️ 기억해요 <b>4,567</b></button>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="active-stamp">운영중</div>
+            <div class="card-header">
+              <div class="card-icon">☕</div>
+              <div><div class="card-title">다음 카페</div><div class="card-years">1999 — 현재</div></div>
+            </div>
+            <div class="card-desc">팬카페, 동호회, 학교 커뮤니티... 커뮤니티의 역사</div>
+            <div class="card-footer">
+              <span class="memory-badge">💬 521개 추억</span>
+              <button class="vote-btn">🕯️ 기억해요 <b>3,244</b></button>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="rip-stamp">R.I.P</div>
+            <div class="card-header">
+              <div class="card-icon">📺</div>
+              <div><div class="card-title">판도라TV</div><div class="card-years">2004 — 2020</div></div>
+            </div>
+            <div class="card-desc">유튜브 전에 동영상을 올리던 그곳. UCC의 원조</div>
+            <div class="card-footer">
+              <span class="memory-badge">💬 312개 추억</span>
+              <button class="vote-btn">🕯️ 기억해요 <b>2,890</b></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail panel -->
+        <div style="margin-top:10px;">
+          <div class="window">
+            <div class="title-bar" style="font-size:10px; padding:2px 5px;">
+              <span>🌐 싸이월드 - 상세 정보</span>
+              <div class="title-bar-buttons">
+                <div class="tb-btn" style="font-size:8px;">_</div>
+                <div class="tb-btn" style="font-size:8px;">✕</div>
+              </div>
+            </div>
+            <div class="window-body">
+              <div style="display:flex; gap:10px;">
+                <div style="flex:1;">
+                  <div class="info-row"><span class="info-label">서비스명</span><span class="info-value">싸이월드 (Cyworld)</span></div>
+                  <div class="info-row"><span class="info-label">카테고리</span><span class="info-value">SNS / 블로그</span></div>
+                  <div class="info-row"><span class="info-label">운영기간</span><span class="info-value">1999.09 ~ 2019.10 (20년)</span></div>
+                  <div class="info-row"><span class="info-label">운영사</span><span class="info-value">SK커뮤니케이션즈</span></div>
+                  <hr class="divider">
+                  <div style="font-size:11px; color:#333; line-height:1.5;">
+                    대한민국 최초의 소셜 네트워크 서비스. 미니홈피, 도토리 가상화폐, 일촌 개념을 도입했으며 2000년대 한국 인터넷 문화의 핵심이었다.
+                  </div>
+                  <div style="display:flex; gap:4px; margin-top:6px;">
+                    <div class="screenshot-thumb">스크린샷 1</div>
+                    <div class="screenshot-thumb">스크린샷 2</div>
+                    <div class="screenshot-thumb">스크린샷 3</div>
+                  </div>
+                </div>
+                <div style="width:180px;">
+                  <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                    <div class="progress-label">기억해요 84%</div>
+                  </div>
+                  <div style="text-align:center; margin-bottom:8px;">
+                    <button class="win-btn" style="font-size:11px; padding:3px 16px;">🕯️ 나도 기억해요!</button>
+                  </div>
+                  <hr class="divider">
+                  <div style="font-size:10px; font-weight:bold; margin-bottom:4px; color:#000080;">💬 최근 추억</div>
+                  <div class="memory-item">
+                    <span class="memory-author">하늘별♡</span>
+                    <span class="memory-date">2일 전</span>
+                    <div class="memory-text">배경음악 설정하느라 밤새웠던 기억... 🎵</div>
+                  </div>
+                  <div class="memory-item">
+                    <span class="memory-author">구름이</span>
+                    <span class="memory-date">3일 전</span>
+                    <div class="memory-text">도토리 사달라고 부모님한테 졸랐던 ㅋㅋ</div>
+                  </div>
+                  <div class="memory-item">
+                    <span class="memory-author">초코별</span>
+                    <span class="memory-date">5일 전</span>
+                    <div class="memory-text">일촌평 남기러 매일 들어갔던 그 시절</div>
+                  </div>
+                  <hr class="divider">
+                  <div style="font-size:10px; font-weight:bold; margin-bottom:4px;">추억 남기기</div>
+                  <input class="win-input" placeholder="닉네임">
+                  <textarea class="win-textarea" placeholder="이 서비스에 대한 추억을 남겨주세요..."></textarea>
+                  <button class="win-btn" style="width:100%; font-size:11px;">📝 추억 남기기</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="status-bar">
+    <span class="status-panel">📂 47개 서비스</span>
+    <span class="status-panel">🕯️ 총 추억 12,847개</span>
+    <span class="status-panel">👻 종료된 서비스: 29개</span>
+    <span class="status-panel" style="margin-left:auto;">준비</span>
+  </div>
+</div>
+</body>
+</html>

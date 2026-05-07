@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  /* === Brand === */
+  --color-primary: #000080;
+  --color-primary-strong: #1084d0;
+  --color-on-primary: #ffffff;
+
+  /* === Surfaces === */
+  --color-canvas: #008080;
+  --color-surface: #c0c0c0;
+  --color-surface-muted: #d4d0c8;
+  --color-paper: #ffffff;
+
+  /* === Bevel (입체 테두리 전용) === */
+  --color-bevel-light: #ffffff;
+  --color-bevel-dark: #808080;
+  --color-bevel-darker: #404040;
+
+  /* === Ink (텍스트 위계) === */
+  --color-ink: #000000;
+  --color-ink-muted: #404040;
+  --color-ink-soft: #666666;
+  --color-ink-faint: #888888;
+
+  /* === Semantic === */
+  --color-critical: #800000;
+  --color-success: #006400;
+
+  /* === Typography ===
+     한글 가독성 우선: Pretendard / Apple SD Gothic Neo / Malgun Gothic
+     윈도우 98 비주얼 무드는 폰트보다는 chrome/border/gradient로 표현 */
+  --font-sans:
+    "Pretendard Variable", "Pretendard",
+    "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
+    -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    "MS Sans Serif", Tahoma, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Menlo", "Courier New", Courier, monospace;
+}
+
+/* === 입체 테두리 유틸리티 === */
+@utility bevel-out {
+  border-style: solid;
+  border-width: 2px;
+  border-top-color: var(--color-bevel-light);
+  border-left-color: var(--color-bevel-light);
+  border-bottom-color: var(--color-bevel-dark);
+  border-right-color: var(--color-bevel-dark);
+}
+
+@utility bevel-out-1 {
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: var(--color-bevel-light);
+  border-left-color: var(--color-bevel-light);
+  border-bottom-color: var(--color-bevel-dark);
+  border-right-color: var(--color-bevel-dark);
+}
+
+@utility bevel-in {
+  border-style: solid;
+  border-width: 2px;
+  border-top-color: var(--color-bevel-dark);
+  border-left-color: var(--color-bevel-dark);
+  border-bottom-color: var(--color-bevel-light);
+  border-right-color: var(--color-bevel-light);
+}
+
+@utility bevel-in-1 {
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: var(--color-bevel-dark);
+  border-left-color: var(--color-bevel-dark);
+  border-bottom-color: var(--color-bevel-light);
+  border-right-color: var(--color-bevel-light);
+}
+
+/* 창 그림자 (2px 우하단 검정 오프셋) */
+@utility shadow-window {
+  box-shadow: 2px 2px 0 0 var(--color-ink);
+}
+
+/* 타이틀바 primary 그라디언트 */
+@utility bg-titlebar {
+  background-image: linear-gradient(
+    to right,
+    var(--color-primary),
+    var(--color-primary-strong)
+  );
+}
+
+/* 진행률 줄무늬 */
+@utility bg-progress-stripes {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-primary) 0,
+    var(--color-primary) 8px,
+    var(--color-primary-strong) 8px,
+    var(--color-primary-strong) 16px
+  );
+}
+
+html,
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  /* 안티앨리어싱 활성화 — 한글 가독성을 위해 픽셀 폰트 효과는 포기 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "tnum", "calt";
+}
+
+@media (max-width: 767px) {
+  html,
+  body {
+    font-size: 14px;
+  }
+}
+
+/* === 스크롤바 (윈도우 98 스타일) === */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface);
+  border: 1px solid;
+  border-color: var(--color-bevel-light) var(--color-bevel-dark)
+    var(--color-bevel-dark) var(--color-bevel-light);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-surface-muted);
+}
+
+::-webkit-scrollbar-button {
+  background: var(--color-surface);
+  border: 1px solid;
+  border-color: var(--color-bevel-light) var(--color-bevel-dark)
+    var(--color-bevel-dark) var(--color-bevel-light);
+  height: 16px;
+  width: 16px;
+  display: block;
+}
+
+/* 윈도우 98 스타일 dotted focus ring */
+button:focus-visible,
+a:focus-visible {
+  outline: 1px dotted var(--color-ink);
+  outline-offset: -3px;
+}
