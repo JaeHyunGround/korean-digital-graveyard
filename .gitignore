@@ -42,6 +42,9 @@ yarn-error.log*
 /.omc
 /.claude
 
+# local-only dev docs
+/docs/SETUP.md
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
