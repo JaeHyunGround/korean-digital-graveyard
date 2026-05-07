@@ -23,8 +23,24 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+/**
+ * Next.js 16 (Turbopack)은 dynamic segment 의 non-ASCII 문자를
+ * 자동 디코딩하지 않으므로 여기서 명시적으로 처리한다.
+ * NFC 정규화는 makeSlug() 와 양쪽을 통일하기 위함.
+ */
+function decodeSlug(raw: string): string {
+  let decoded = raw;
+  try {
+    decoded = decodeURIComponent(raw);
+  } catch {
+    /* 잘못된 percent encoding이면 raw 그대로 사용 */
+  }
+  return decoded.normalize("NFC");
+}
+
 export async function generateMetadata({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = decodeSlug(rawSlug);
   const supabase = getSupabase();
   const { data } = await supabase
     .from("services")
@@ -40,7 +56,8 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function ServiceDetailPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = decodeSlug(rawSlug);
   const supabase = getSupabase();
 
   const { data: service, error: serviceError } = await supabase
