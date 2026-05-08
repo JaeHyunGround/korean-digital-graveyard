@@ -81,8 +81,8 @@ export function HomeView({ services }: Props) {
   const ripCount = services.filter((s) => s.end_year !== null).length;
 
   return (
-    <div className="mx-auto flex max-h-[min(80dvh,800px)] max-w-6xl flex-col">
-      <Window className="flex min-h-0 flex-1 flex-col">
+    <div className="mx-auto max-w-6xl md:flex md:max-h-[min(80dvh,800px)] md:flex-col">
+      <Window className="md:flex md:min-h-0 md:flex-1 md:flex-col">
         <TitleBar title="🪦 한국 디지털 묘지 — 추억의 인터넷 서비스 아카이브" />
         <MenuBar
           logo={<>🪦 디지털 묘지</>}
@@ -93,7 +93,7 @@ export function HomeView({ services }: Props) {
             { label: "도움말(H)", href: "/about" },
           ]}
         />
-        <WindowBody className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden md:flex-row">
+        <WindowBody className="flex flex-col gap-2 md:min-h-0 md:flex-1 md:flex-row md:overflow-hidden">
           <aside className="hidden shrink-0 self-start md:block md:w-44">
             <FilterSidebar
               category={category}
@@ -117,13 +117,13 @@ export function HomeView({ services }: Props) {
             />
           </div>
 
-          <main className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <main className="min-w-0 md:flex md:min-h-0 md:flex-1 md:flex-col">
             <SortBar
               sort={sort}
               total={filtered.length}
               onChange={(v) => setParam("sort", v, "vote")}
             />
-            <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+            <div className="md:min-h-0 md:flex-1 md:overflow-y-auto md:pr-1">
               {filtered.length === 0 ? (
                 <EmptyState
                   hasServices={services.length > 0}

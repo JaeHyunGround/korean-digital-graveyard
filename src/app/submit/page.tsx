@@ -16,7 +16,7 @@ export const metadata = {
 
 export default function SubmitPage() {
   return (
-    <div className="mx-auto max-h-[min(80dvh,800px)] max-w-2xl overflow-y-auto">
+    <div className="mx-auto max-w-2xl md:max-h-[min(80dvh,800px)] md:overflow-y-auto">
       <Window>
         <TitleBar title="🪦 묘비 세우기" />
         <MenuBar

@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="h-full">
-      <body className="h-dvh overflow-hidden bg-canvas safe-pad">
+      <body className="min-h-dvh bg-canvas safe-pad md:h-dvh md:overflow-hidden">
         {children} <Analytics />
       </body>
     </html>
