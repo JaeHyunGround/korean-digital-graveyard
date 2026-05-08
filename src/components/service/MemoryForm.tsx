@@ -3,16 +3,17 @@
 import { useState, useTransition, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Input, Textarea } from "@/components/ui";
-import { getSupabase } from "@/lib/supabase";
+import { submitMemoryAction } from "@/lib/actions";
 
 const NAME_MAX = 30;
 const CONTENT_MAX = 500;
 
 type Props = {
   serviceId: string;
+  serviceSlug: string;
 };
 
-export function MemoryForm({ serviceId }: Props) {
+export function MemoryForm({ serviceId, serviceSlug }: Props) {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -24,34 +25,23 @@ export function MemoryForm({ serviceId }: Props) {
     e.preventDefault();
     setError(null);
 
-    const trimmedName = name.trim();
-    const trimmedContent = content.trim();
-
-    if (!trimmedName || !trimmedContent) {
-      setError("닉네임과 내용을 모두 입력해주세요.");
-      return;
-    }
-    if (trimmedName.length > NAME_MAX || trimmedContent.length > CONTENT_MAX) {
-      setError("입력 길이를 확인해주세요.");
-      return;
-    }
-
     setSubmitting(true);
     try {
-      const supabase = getSupabase();
-      const { error: insertError } = await supabase.from("memories").insert({
-        service_id: serviceId,
-        author_name: trimmedName,
-        content: trimmedContent,
+      const result = await submitMemoryAction({
+        serviceId,
+        serviceSlug,
+        authorName: name,
+        content,
       });
 
-      if (insertError) {
-        setError(insertError.message);
+      if (!result.ok) {
+        setError(result.errorMessage);
         return;
       }
 
       setName("");
       setContent("");
+      // server action 의 revalidatePath 와 클라이언트 라우터 캐시 동기화
       startTransition(() => router.refresh());
     } finally {
       setSubmitting(false);

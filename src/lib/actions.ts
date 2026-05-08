@@ -146,3 +146,47 @@ export async function submitServiceAction(
     errorMessage: "같은 이름의 서비스가 이미 너무 많습니다. 다른 이름을 사용해주세요.",
   };
 }
+
+// ============================================================================
+// submitMemoryAction — 추억 댓글 등록
+// ============================================================================
+
+const MEMORY_NAME_MAX = 30;
+const MEMORY_CONTENT_MAX = 500;
+
+export async function submitMemoryAction(input: {
+  serviceId: string;
+  serviceSlug: string;
+  authorName: string;
+  content: string;
+}): Promise<{ ok: true } | { ok: false; errorMessage: string }> {
+  const authorName = input.authorName.trim();
+  const content = input.content.trim();
+
+  if (!authorName || !content) {
+    return { ok: false, errorMessage: "닉네임과 내용을 모두 입력해주세요." };
+  }
+  if (
+    authorName.length > MEMORY_NAME_MAX ||
+    content.length > MEMORY_CONTENT_MAX
+  ) {
+    return { ok: false, errorMessage: "입력 길이를 확인해주세요." };
+  }
+
+  const supabase = getSupabase();
+  const { error } = await supabase.from("memories").insert({
+    service_id: input.serviceId,
+    author_name: authorName,
+    content,
+  });
+
+  if (error) {
+    return { ok: false, errorMessage: error.message };
+  }
+
+  // 홈 카드의 "N개 추억" 카운트 + 상세 페이지 추억 리스트 둘 다 즉시 반영
+  revalidatePath("/");
+  revalidatePath(`/services/${input.serviceSlug}`);
+
+  return { ok: true };
+}

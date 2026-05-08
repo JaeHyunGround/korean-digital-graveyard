@@ -225,7 +225,7 @@ function ServiceDetailBody({
           <h2 className="mb-1.5 text-[12px] font-bold text-primary">
             📝 추억 남기기
           </h2>
-          <MemoryForm serviceId={service.id} />
+          <MemoryForm serviceId={service.id} serviceSlug={service.slug} />
         </div>
       </aside>
     </div>
