@@ -10,8 +10,8 @@ import {
   Select,
   Divider,
 } from "@/components/ui";
-import { getSupabase } from "@/lib/supabase";
-import { makeSlug, normalizeName, withRandomSuffix } from "@/lib/slug";
+import { submitServiceAction } from "@/lib/actions";
+import { makeSlug } from "@/lib/slug";
 import {
   SERVICE_CATEGORIES,
   type ServiceCategory,
@@ -95,64 +95,22 @@ export function SubmitForm() {
 
     setSubmitting(true);
     try {
-      const supabase = getSupabase();
-      const baseSlug = makeSlug(form.name);
-      const startYear = Number(form.startYear);
-      const endYear = form.isAlive ? null : Number(form.endYear);
+      const result = await submitServiceAction({
+        name: form.name,
+        category: form.category,
+        startYear: Number(form.startYear),
+        endYear: form.isAlive ? null : Number(form.endYear),
+        description: form.description,
+      });
 
-      // 사전 중복 검증: 정규화된 이름이 같은 묘비가 이미 있는지 확인
-      const targetKey = normalizeName(form.name);
-      const { data: existing, error: existingErr } = await supabase
-        .from("services")
-        .select("name, slug");
-      if (existingErr) {
-        setError(existingErr.message);
-        return;
-      }
-      const dup = existing?.find((s) => normalizeName(s.name) === targetKey);
-      if (dup) {
-        setError(
-          `"${dup.name}" 은(는) 이미 안치되어 있어요. 같은 묘비에 추억을 남겨주세요.`
-        );
-        setDuplicateSlug(dup.slug);
+      if (result.ok) {
+        router.push(`/services/${encodeURIComponent(result.slug)}`);
+        router.refresh();
         return;
       }
 
-      // unique_violation(23505) 발생 시 접미어 추가하여 최대 3회 재시도
-      let attempt = 0;
-      let slugToUse = baseSlug;
-      while (attempt < 3) {
-        const { data, error: insertErr } = await supabase
-          .from("services")
-          .insert({
-            name: form.name.trim(),
-            slug: slugToUse,
-            category: form.category,
-            start_year: startYear,
-            end_year: endYear,
-            description: form.description.trim(),
-            vote_count: 0,
-          })
-          .select("slug")
-          .single();
-
-        if (!insertErr && data) {
-          router.push(`/services/${encodeURIComponent(data.slug)}`);
-          router.refresh();
-          return;
-        }
-
-        if (insertErr?.code === "23505") {
-          slugToUse = withRandomSuffix(baseSlug);
-          attempt++;
-          continue;
-        }
-
-        setError(insertErr?.message ?? "알 수 없는 오류가 발생했습니다.");
-        return;
-      }
-
-      setError("같은 이름의 서비스가 이미 너무 많습니다. 다른 이름을 사용해주세요.");
+      setError(result.errorMessage);
+      if (result.duplicate) setDuplicateSlug(result.duplicate.slug);
     } catch (e) {
       setError(e instanceof Error ? e.message : "제출 실패");
     } finally {
