@@ -89,7 +89,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const icon = service.logo_url || CATEGORY_EMOJI[service.category];
 
   return (
-    <div className="mx-auto h-full max-w-5xl overflow-y-auto">
+    <div className="mx-auto max-h-[80dvh] max-w-5xl overflow-y-auto">
       <Window>
         <TitleBar
           title={
@@ -234,7 +234,7 @@ function ServiceDetailBody({
 
 function ErrorBox({ message }: { message: string }) {
   return (
-    <div className="mx-auto h-full max-w-2xl overflow-y-auto">
+    <div className="mx-auto max-h-[80dvh] max-w-2xl overflow-y-auto">
       <Window>
         <TitleBar title="⚠️ 오류" />
         <WindowBody>

@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto h-full max-w-2xl overflow-y-auto">
+    <div className="mx-auto max-h-[80dvh] max-w-2xl overflow-y-auto">
       <Window>
         <TitleBar title="ℹ️ 사이트 소개" />
         <MenuBar
