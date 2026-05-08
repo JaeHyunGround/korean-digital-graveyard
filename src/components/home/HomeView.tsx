@@ -81,8 +81,8 @@ export function HomeView({ services }: Props) {
   const ripCount = services.filter((s) => s.end_year !== null).length;
 
   return (
-    <div className="mx-auto max-w-6xl">
-      <Window>
+    <div className="mx-auto h-[calc(100dvh-1.5rem)] max-w-6xl md:h-[calc(100dvh-2rem)]">
+      <Window className="flex h-full flex-col">
         <TitleBar title="🪦 한국 디지털 묘지 — 추억의 인터넷 서비스 아카이브" />
         <MenuBar
           logo={<>🪦 디지털 묘지</>}
@@ -93,37 +93,37 @@ export function HomeView({ services }: Props) {
             { label: "도움말(H)", href: "/about" },
           ]}
         />
-        <WindowBody>
-          <div className="flex flex-col gap-2 md:flex-row">
-            <aside className="hidden shrink-0 md:block md:w-44">
-              <FilterSidebar
-                category={category}
-                decade={decade}
-                total={totalServices}
-                categoryCounts={categoryCounts}
-                decadeCounts={decadeCounts}
-                onCategoryChange={(v) => setParam("category", v, "전체")}
-                onDecadeChange={(v) => setParam("decade", v, "all")}
-              />
-            </aside>
-            <div className="md:hidden">
-              <MobileFilterBar
-                category={category}
-                decade={decade}
-                total={totalServices}
-                categoryCounts={categoryCounts}
-                decadeCounts={decadeCounts}
-                onCategoryChange={(v) => setParam("category", v, "전체")}
-                onDecadeChange={(v) => setParam("decade", v, "all")}
-              />
-            </div>
+        <WindowBody className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden md:flex-row">
+          <aside className="hidden shrink-0 self-start md:block md:w-44">
+            <FilterSidebar
+              category={category}
+              decade={decade}
+              total={totalServices}
+              categoryCounts={categoryCounts}
+              decadeCounts={decadeCounts}
+              onCategoryChange={(v) => setParam("category", v, "전체")}
+              onDecadeChange={(v) => setParam("decade", v, "all")}
+            />
+          </aside>
+          <div className="md:hidden">
+            <MobileFilterBar
+              category={category}
+              decade={decade}
+              total={totalServices}
+              categoryCounts={categoryCounts}
+              decadeCounts={decadeCounts}
+              onCategoryChange={(v) => setParam("category", v, "전체")}
+              onDecadeChange={(v) => setParam("decade", v, "all")}
+            />
+          </div>
 
-            <main className="min-w-0 flex-1">
-              <SortBar
-                sort={sort}
-                total={filtered.length}
-                onChange={(v) => setParam("sort", v, "vote")}
-              />
+          <main className="flex min-h-0 min-w-0 flex-1 flex-col">
+            <SortBar
+              sort={sort}
+              total={filtered.length}
+              onChange={(v) => setParam("sort", v, "vote")}
+            />
+            <div className="min-h-0 flex-1 overflow-y-auto pr-1">
               {filtered.length === 0 ? (
                 <EmptyState
                   hasServices={services.length > 0}
@@ -136,8 +136,8 @@ export function HomeView({ services }: Props) {
                   ))}
                 </div>
               )}
-            </main>
-          </div>
+            </div>
+          </main>
         </WindowBody>
         <StatusBar>
           <StatusPanel>📂 {totalServices}개 서비스</StatusPanel>
