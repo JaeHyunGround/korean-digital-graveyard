@@ -198,7 +198,7 @@ function ServiceDetailBody({
         <h2 className="mb-1 text-[12px] font-bold text-primary">📖 설명</h2>
         <p className="whitespace-pre-wrap text-[13px] leading-[1.6] text-ink">
           {service.description ||
-            "아직 등록된 설명이 없습니다. 추억을 남기며 이 서비스를 함께 기억해요."}
+            "비문 없이 잠든 묘비입니다. 댓글로 그 시절 추억을 함께 나눠주세요."}
         </p>
       </section>
 

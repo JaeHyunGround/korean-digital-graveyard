@@ -34,7 +34,7 @@ export function ServiceCard({ service }: Props) {
         </div>
       </header>
       <p className="line-clamp-2 min-h-[28px] border-t border-surface pt-1 text-[11px] leading-[1.4] text-ink-muted">
-        {service.description || "설명이 아직 등록되지 않았습니다."}
+        {service.description || "비문이 없는 묘비"}
       </p>
       <footer className="mt-1.5 flex items-center justify-between">
         <span className="text-[11px] text-ink-soft">
