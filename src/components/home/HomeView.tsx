@@ -81,7 +81,7 @@ export function HomeView({ services }: Props) {
   const ripCount = services.filter((s) => s.end_year !== null).length;
 
   return (
-    <div className="mx-auto flex max-h-[80dvh] max-w-6xl flex-col">
+    <div className="mx-auto flex max-h-[min(80dvh,800px)] max-w-6xl flex-col">
       <Window className="flex min-h-0 flex-1 flex-col">
         <TitleBar title="🪦 한국 디지털 묘지 — 추억의 인터넷 서비스 아카이브" />
         <MenuBar

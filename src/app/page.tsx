@@ -66,7 +66,7 @@ export default async function HomePage() {
 
 function ErrorBanner({ message }: { message: string }) {
   return (
-    <div className="mx-auto max-h-[80dvh] max-w-2xl overflow-y-auto">
+    <div className="mx-auto max-h-[min(80dvh,800px)] max-w-2xl overflow-y-auto">
       <Window>
         <TitleBar title="⚠️ 오류 — Supabase 연결 실패" />
         <WindowBody>
