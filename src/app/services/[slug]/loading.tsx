@@ -11,7 +11,7 @@ import {
 
 export default function ServiceDetailLoading() {
   return (
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto h-full max-w-5xl overflow-y-auto">
       <Window>
         <TitleBar title="🪦 묘비를 불러오는 중…" />
         <MenuBar
