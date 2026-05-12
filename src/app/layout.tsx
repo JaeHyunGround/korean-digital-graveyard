@@ -9,10 +9,13 @@ export const metadata: Metadata = {
 };
 
 // iOS notch / 카카오톡 인앱 브라우저 등에서 safe-area 인식되도록.
+// interactiveWidget: 'resizes-content' — 키보드 열릴 때 layout viewport 가
+// 줄어들어 input이 키보드에 가려지지 않고 보이도록 함 (Android 인앱 브라우저 대응)
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  interactiveWidget: "resizes-content",
 };
 
 export default function RootLayout({

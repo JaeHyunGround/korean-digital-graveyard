@@ -1,9 +1,23 @@
 "use client";
 
-import { useState, useTransition, type FormEvent } from "react";
+import { useState, useTransition, type FocusEvent, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Input, Textarea } from "@/components/ui";
 import { submitMemoryAction } from "@/lib/actions";
+
+/**
+ * Android 인앱 브라우저(Instagram·카톡 등)에서 키보드가 열려도
+ * 포커스된 input 이 보이지 않는 케이스를 방어. 키보드 애니메이션 완료 후
+ * 자기 자신을 viewport 가운데로 스크롤한다.
+ */
+function scrollIntoViewOnFocus(
+  e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+) {
+  const target = e.currentTarget;
+  setTimeout(() => {
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 300);
+}
 
 const NAME_MAX = 30;
 const CONTENT_MAX = 500;
@@ -55,6 +69,7 @@ export function MemoryForm({ serviceId, serviceSlug }: Props) {
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onFocus={scrollIntoViewOnFocus}
           placeholder="추억을 남길 이름/닉네임"
           maxLength={NAME_MAX}
           disabled={submitting}
@@ -66,6 +81,7 @@ export function MemoryForm({ serviceId, serviceSlug }: Props) {
         <Textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          onFocus={scrollIntoViewOnFocus}
           placeholder="이 서비스에 대한 추억을 남겨주세요…"
           maxLength={CONTENT_MAX}
           rows={3}
