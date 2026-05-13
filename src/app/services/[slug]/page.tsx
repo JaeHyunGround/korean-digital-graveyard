@@ -89,7 +89,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const icon = service.logo_url || CATEGORY_EMOJI[service.category];
 
   return (
-    <div className="mx-auto max-w-5xl md:max-h-[min(80dvh,800px)] md:overflow-y-auto">
+    <div className="mx-auto max-w-5xl">
       <Window>
         <TitleBar
           title={
